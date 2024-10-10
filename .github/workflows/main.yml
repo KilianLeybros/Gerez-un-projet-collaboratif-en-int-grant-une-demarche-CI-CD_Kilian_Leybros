@@ -15,8 +15,9 @@ jobs:
           distribution: 'temurin'
       - name: Installation des dépendences et tests
         run: mvn clean install
+        working-directory: back
       - name: Récupération du rapport de couverture
         uses: actions/upload-artifact@v4
         with:
           name: jacoco
-          path: target/site/jacoco/jacoco.xml
+          path: back/target/site/jacoco/jacoco.xml
