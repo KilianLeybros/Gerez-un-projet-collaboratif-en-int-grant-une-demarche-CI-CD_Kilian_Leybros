@@ -9,6 +9,8 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Récupération du code
+        uses: actions/checkout@v4
+      - name: Java setup
         uses: actions/setup-java@v4
         with:
           java-version: '11'
