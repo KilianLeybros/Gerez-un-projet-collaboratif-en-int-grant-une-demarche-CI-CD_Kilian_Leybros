@@ -1,0 +1,22 @@
+name: CI/CD BobApp
+
+on: [push, pull_request]
+
+jobs:
+  backend:
+    name: test du backend
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Récupération du code
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      - name: Installation des dépendences et tests
+        run: mvn clean install
+      - name: Récupération du rapport de couverture
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco
+          path: target/site/jacoco/jacoco.xml
