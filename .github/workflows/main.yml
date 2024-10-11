@@ -43,5 +43,5 @@ jobs:
       - name: Récupération du dossier avec les rapports de couvertures
         uses: actions/upload-artifact@v4
         with:
-          name: istanbul report
+          name: coverage
           path: front/coverage
