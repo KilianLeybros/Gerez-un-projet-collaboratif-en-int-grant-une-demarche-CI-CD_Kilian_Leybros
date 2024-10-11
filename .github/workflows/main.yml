@@ -6,7 +6,7 @@ jobs:
   backend:
     name: test du backend
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'push'
     steps:
       - name: Récupération du code
         uses: actions/checkout@v4
@@ -15,11 +15,32 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      - name: Installation des dépendences et tests
+      - name: Installation des dépendences et test
         run: mvn clean install
         working-directory: back
-      - name: Récupération du rapport de couverture
+      - name: Récupération du rapport de couverture XML
         uses: actions/upload-artifact@v4
         with:
           name: jacoco
           path: back/target/site/jacoco/jacoco.xml
+  frontend:
+    name: test du frontend
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v4
+      - name: Node.js setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Ajustez selon votre projet
+      - name: Installation des dépendances
+        run: npm install
+        working-directory: front
+      - name: test angular
+        run: npm run test
+      - name: Récupération du dossier avec les rapports de couvertures
+        uses: actions/upload-artifact@v4
+        with:
+          name: istanbul report
+          path: front/coverage/
