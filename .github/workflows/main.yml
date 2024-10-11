@@ -7,6 +7,16 @@ jobs:
     name: test du backend et sonar cloud
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
+    services:
+     sonar:
+      image: sonarqube
+      ports:
+        - 9000:9000
+      options: >-
+        --health-cmd="curl -f http://localhost:9000/api/system/health" 
+        --health-interval=30s 
+        --health-timeout=5s 
+        --health-retries=5
     steps:
       - name: Récupération du code
         uses: actions/checkout@v4
@@ -38,7 +48,6 @@ jobs:
       - name: Build and analyze
         working-directory: back
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=kilianleybrosop_bobapp
   frontend:
