@@ -44,7 +44,7 @@ jobs:
         working-directory: back
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn sonar:sonar -Dsonar.projectKey=kilianleybrosop_bobapp -Dsonar.host.url=http://localhost:9000 -Dsonar.login=0b4f079eead54372126a88a74239338cb0e778fa
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=kilianleybrosop_bobapp -Dsonar.host.url=http://localhost:9000 -Dsonar.login=0b4f079eead54372126a88a74239338cb0e778fa
   frontend:
     name: test du frontend
     runs-on: ubuntu-latest
