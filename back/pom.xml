@@ -33,12 +33,7 @@
 	<build>
 		<plugins>
 			<plugin>
-              	<groupId>org.sonarsource.scanner.maven</groupId>
-              	<artifactId>sonar-maven-plugin</artifactId>
-              	<version>4.0.0.4121</version> <!-- Replace with the latest version -->
-          	</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
+				<groupId>org.springframework.boot</gpId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
