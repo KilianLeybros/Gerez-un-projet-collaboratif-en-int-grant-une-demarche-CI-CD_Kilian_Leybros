@@ -14,7 +14,7 @@
 	<name>bobapp</name>
 	<description>L'application de joke par excellence !</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<sonar.organization>kilianleybrosop</sonar.organization>
 		<sonar.projectKey>kilianleybrosop</sonar.projectKey>
 	</properties>
@@ -43,7 +43,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
+				<version>0.8.8</version>
 				<executions>
 					<execution>
 						<goals>
