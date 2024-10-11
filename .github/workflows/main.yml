@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   backend:
-    name: test du backend
+    name: test du backend et sonar cloud
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
@@ -15,6 +15,12 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
       - name: Installation des dépendences et test
         run: mvn clean install
         working-directory: back
@@ -23,6 +29,18 @@ jobs:
         with:
           name: jacoco
           path: back/target/site/jacoco/jacoco.xml
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Build and analyze
+        working-directory: back
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=kilianleybrosop_bobapp
   frontend:
     name: test du frontend
     runs-on: ubuntu-latest
