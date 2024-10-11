@@ -7,11 +7,6 @@ jobs:
     name: test du backend et sonar cloud
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-    services:
-     sonar:
-      image: sonarqube
-      ports:
-        - 9000:9000
     steps:
       - name: Récupération du code
         uses: actions/checkout@v4
