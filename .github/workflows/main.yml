@@ -38,11 +38,21 @@ jobs:
       - name: Vérifie si le porjet sonar cloud exist, sinon on le créé
         id: check_sonar_project
         run: |
+          # Vérifiez si le projet existe
           response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?projects=${{ secrets.SONAR_PROJECT_KEY }}")
-          echo "$response" | jq '.paging.total' > total.txt
-          total=$(cat total.txt)
+          echo "SonarCloud API response: $response"  # Ajoutez cette ligne pour voir la réponse brute
+
+          # Essayez d'extraire la valeur du champ total
+          total=$(echo "$response" | jq '.paging.total')
+
+          # Affichez la valeur de total pour le débogage
+          echo "Total: $total"
+
           if [ "$total" -eq "0" ]; then
+            echo "Project does not exist. Creating project..."
             curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY }}&name=${{ secrets.SONAR_PROJECT_NAME }}"
+          else
+            echo "Project already exists."
           fi
           
       - name: Run SonarQube Analysis
