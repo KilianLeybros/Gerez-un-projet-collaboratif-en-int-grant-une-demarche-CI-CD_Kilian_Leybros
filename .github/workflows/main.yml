@@ -95,6 +95,7 @@ jobs:
             echo "Le projet existe déja."
           fi
       - name: Analyse de sonar cloud frontend
+        working-directory: front
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
