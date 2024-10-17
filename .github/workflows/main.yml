@@ -35,12 +35,22 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+      - name: Vérifie si le porjet sonar cloud exist, sinon on le créé
+        id: check_sonar_project
+        run: |
+          response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?projects=${{ secrets.SONAR_PROJECT_KEY }}")
+          echo "$response" | jq '.paging.total' > total.txt
+          total=$(cat total.txt)
+          if [ "$total" -eq "0" ]; then
+            curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY }}&name=${{ secrets.SONAR_PROJECT_NAME }}"
+          fi
+          
       - name: Run SonarQube Analysis
         working-directory: back
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-         mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io \
+         mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io
 
   frontend:
     name: test du frontend
