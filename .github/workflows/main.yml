@@ -36,8 +36,10 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Vérifie si le porjet sonar cloud exist, sinon on le créé
-        id: check_sonar_project
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
+          echo "Token length: ${SONAR_TOKEN}"
           # Vérifiez si le projet existe
           response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?projects=${{ secrets.SONAR_PROJECT_KEY }}" -w "\nHTTP Status: %{http_code}\n" )
           echo "SonarCloud API response: $response"  # Ajoutez cette ligne pour voir la réponse brute
