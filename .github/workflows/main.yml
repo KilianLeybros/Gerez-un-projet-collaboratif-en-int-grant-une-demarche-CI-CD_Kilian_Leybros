@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "Token length: ${SONAR_TOKEN}"
           # Vérifiez si le projet existe
-          response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?organization=${{ secrets.SONAR_ORGANIZATION }}&projects=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}")
+          response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?organization=${{ secrets.SONAR_ORGANIZATION }}&projects=${{ secrets.SONAR_PROJECT_KEY_BACK }}")
           echo "SonarCloud API response: $response"  # Ajoutez cette ligne pour voir la réponse brute
 
           total=$(echo "$response" | jq '.paging.total')
