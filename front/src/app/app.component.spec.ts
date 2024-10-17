@@ -16,7 +16,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     const spy = spyOn(component,'getRandomJoke');
-    component.ngOnInit();
+    app.ngOnInit();
     expect(spy).toHaveBeenCalled();
   });
 });
