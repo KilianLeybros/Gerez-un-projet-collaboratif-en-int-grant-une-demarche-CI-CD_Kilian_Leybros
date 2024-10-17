@@ -35,6 +35,9 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+      # Installation de jq
+      - name: Install jq
+        run: sudo apt-get install jq
       - name: Vérifie si le porjet sonar cloud exist, sinon on le créé
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
