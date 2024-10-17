@@ -19,6 +19,9 @@
 		<sonar.projectKey>kilianleybrosopbobapp-back</sonar.projectKey>
 		<sonar.projectName>bobapp-back</sonar.projectName>
 		<sonar.login>${env.SONAR_TOKEN}</sonar.login>
+		<sonar.coverage.jacoco.xmlReportPaths>
+			../back/target/site/jacoco/jacoco.xml
+		</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<dependencies>
 		<dependency>
