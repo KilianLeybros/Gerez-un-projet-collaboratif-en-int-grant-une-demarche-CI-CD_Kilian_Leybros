@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   backend:
-    name: test du backend et sonar cloud
+    name: Test du backend et sonar cloud
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
@@ -15,12 +15,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - name: Installation des dépendences et test
         run: mvn clean install
         working-directory: back
@@ -40,23 +34,20 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           echo "Token length: ${SONAR_TOKEN}"
-          # Vérifiez si le projet existe
+          # Vérifier si le projet existe
           response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?organization=${{ secrets.SONAR_ORGANIZATION }}&projects=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}")
           echo "SonarCloud API response: $response"  # Ajoutez cette ligne pour voir la réponse brute
 
           total=$(echo "$response" | jq '.paging.total')
-          
-          # Affichez la valeur de total pour le débogage
-          echo "Total: $total"
 
+          #Si le projet n'existe pas 
           if [ -z "$total" ] || [ "$total" -eq "0" ]; then
-            echo "Project does not exist. Creating project..."
             curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}&name=${{ secrets.SONAR_PROJECT_NAME_BACK }}&mainBranch=main"
           else
             echo "Project already exists."
           fi
           
-      - name: Run SonarQube Analysis
+      - name: Analyse de sonar cloud
         working-directory: back
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
