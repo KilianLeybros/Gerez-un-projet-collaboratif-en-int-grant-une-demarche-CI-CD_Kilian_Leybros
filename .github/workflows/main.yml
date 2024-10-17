@@ -45,6 +45,7 @@ jobs:
           echo "SonarCloud API response: $response"  # Ajoutez cette ligne pour voir la réponse brute
 
           # Essayez d'extraire la valeur du champ total
+          echo "$response"
           echo "$response" > response.json
           total=$(jq '.paging.total' response.json)
           rm response.json
