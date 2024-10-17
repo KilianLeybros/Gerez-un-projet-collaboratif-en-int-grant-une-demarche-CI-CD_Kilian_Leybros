@@ -108,5 +108,4 @@ jobs:
             -Dsonar.sources=src \
             -Dsonar.tests=src \
             -Dsonar.sourceEncoding=UTF-8 \
-            -Dsonar.exclusions=**/polyfills.ts \
             -X
