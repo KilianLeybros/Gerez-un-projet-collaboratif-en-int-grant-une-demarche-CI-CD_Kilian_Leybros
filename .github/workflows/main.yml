@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "Token length: ${SONAR_TOKEN}"
           # Vérifiez si le projet existe
-          response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?organization=${{ secrets.SONAR_ORGANIZATION }}&projects=${{ secrets.SONAR_PROJECT_KEY }}" -w "\nHTTP Status: %{http_code}\n" )
+          response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?organization=${{ secrets.SONAR_ORGANIZATION }}&projects=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}" -w "\nHTTP Status: %{http_code}\n" )
           echo "SonarCloud API response: $response"  # Ajoutez cette ligne pour voir la réponse brute
 
           # Essayez d'extraire la valeur du champ total
@@ -52,7 +52,7 @@ jobs:
 
           if [ -z "$total" ] || [ "$total" -eq "0" ]; then
             echo "Project does not exist. Creating project..."
-            curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY }}&name=${{ secrets.SONAR_PROJECT_NAME }}"
+            curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}&name=${{ secrets.SONAR_PROJECT_NAME }}"
           else
             echo "Project already exists."
           fi
