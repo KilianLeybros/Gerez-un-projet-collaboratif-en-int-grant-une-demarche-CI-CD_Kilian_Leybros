@@ -51,7 +51,7 @@ jobs:
 
           if [ -z "$total" ] || [ "$total" -eq "0" ]; then
             echo "Project does not exist. Creating project..."
-            curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}&name=${{ secrets.SONAR_PROJECT_NAME_BACK }}"
+            curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}&name=${{ secrets.SONAR_PROJECT_NAME_BACK }}&mainBranch=main"
           else
             echo "Project already exists."
           fi
