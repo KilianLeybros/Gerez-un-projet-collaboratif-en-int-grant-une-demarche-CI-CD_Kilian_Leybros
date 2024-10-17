@@ -7,18 +7,13 @@ jobs:
     name: test du backend et sonar cloud
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-    services:
-     sonar:
-      image: sonarqube
-      ports:
-        - 9000:9000
     steps:
       - name: Récupération du code
         uses: actions/checkout@v4
       - name: Java setup
         uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
       - name: Cache Maven packages
         uses: actions/cache@v4
@@ -45,11 +40,8 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.0:sonar \
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY_BACKEND }} \
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+         mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io \
+
   frontend:
     name: test du frontend
     runs-on: ubuntu-latest
