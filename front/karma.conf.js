@@ -26,9 +26,9 @@ module.exports = function (config) {
     },
     coverageReporter: {
       dir: "coverage/bobapp",
-      subdir: ".",
-      reporters: [{ type: "html" }, { type: "text-summary" }],
-      includeAllSources: true,
+      dir: 'coverage/',
+      subdir: '.',
+      file: 'lcov.info'
     },
     reporters: ["progress", "kjhtml"],
     port: 9876,
