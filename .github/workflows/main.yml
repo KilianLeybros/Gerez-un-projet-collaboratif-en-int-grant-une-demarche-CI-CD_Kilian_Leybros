@@ -49,13 +49,6 @@ jobs:
 
           # Affichez la valeur de total pour le débogage
           echo "Total: $total"
-
-          if [ -z "$total" ] || [ "$total" -eq "0" ]; then
-            echo "Project does not exist. Creating project..."
-            curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}&name=${{ secrets.SONAR_PROJECT_NAME }}"
-          else
-            echo "Project already exists."
-          fi
           
       - name: Run SonarQube Analysis
         working-directory: back
