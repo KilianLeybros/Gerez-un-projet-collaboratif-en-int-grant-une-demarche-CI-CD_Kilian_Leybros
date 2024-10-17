@@ -48,7 +48,7 @@ jobs:
           # Affichez la valeur de total pour le débogage
           echo "Total: $total"
 
-          if [ "$total" -eq "0" ]; then
+          if [ -z "$total" ] || [ "$total" -eq "0" ]; then
             echo "Project does not exist. Creating project..."
             curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY }}&name=${{ secrets.SONAR_PROJECT_NAME }}"
           else
