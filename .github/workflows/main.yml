@@ -29,25 +29,23 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Vérifie si le porjet sonar cloud exist, sinon on le créé
+      - name: Vérifie si le projet sonar cloud exist, sinon on le créé
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           echo "Token length: ${SONAR_TOKEN}"
           # Vérifier si le projet existe
           response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?organization=${{ secrets.SONAR_ORGANIZATION }}&projects=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}")
-          echo "SonarCloud API response: $response"  # Ajoutez cette ligne pour voir la réponse brute
-
           total=$(echo "$response" | jq '.paging.total')
 
           #Si le projet n'existe pas 
           if [ -z "$total" ] || [ "$total" -eq "0" ]; then
-            curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}&name=${{ secrets.SONAR_PROJECT_NAME_BACK }}&mainBranch=main"
+            curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}&name=${{ secrets.SONAR_PROJECT_NAME_BACK }}"
           else
-            echo "Project already exists."
+            echo "Le projet existe déja."
           fi
           
-      - name: Analyse de sonar cloud
+      - name: Analyse de sonar cloud backend
         working-directory: back
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -76,3 +74,31 @@ jobs:
         with:
           name: coverage
           path: front/coverage
+      - name: Vérifie si le projet sonar cloud exist, sinon on le créé
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          echo "Token length: ${SONAR_TOKEN}"
+          # Vérifier si le projet existe
+          response=$(curl -s -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/search?organization=${{ secrets.SONAR_ORGANIZATION }}&projects=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}")
+          total=$(echo "$response" | jq '.paging.total')
+
+          #Si le projet n'existe pas 
+          if [ -z "$total" ] || [ "$total" -eq "0" ]; then
+            curl -X POST -u ${SONAR_TOKEN}: "https://sonarcloud.io/api/projects/create?organization=${{ secrets.SONAR_ORGANIZATION }}&project=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}&name=${{ secrets.SONAR_PROJECT_NAME_FRONT }}"
+          else
+            echo "Le projet existe déja."
+          fi
+      - name: Analyse de sonar cloud frontend
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          npm install -g sonar-scanner
+          sonar-scanner \
+            -Dsonar.projectKey=${{ SONAR_PROJECT_KEY_FRONTEND }} \
+            -Dsonar.organization=${{ SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src \
+            -Dsonar.tests=src \
+            -Dsonar.sourceEncoding=UTF-8
