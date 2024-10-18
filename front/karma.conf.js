@@ -30,7 +30,7 @@ module.exports = function (config) {
       type: "lcov",
       file: "lcov.info",
     },
-    reporters: ["progress", "kjhtml"],
+    //reporters: ["progress", "kjhtml"],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
