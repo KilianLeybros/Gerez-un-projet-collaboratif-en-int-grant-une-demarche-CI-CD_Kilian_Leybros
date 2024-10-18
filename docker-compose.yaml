@@ -3,6 +3,7 @@ version: "3.8"
 name: bobapp
 services:
   frontnginx:
+    image: bobapp-frontend
     build:
       context: ./front
       dockerfile: Dockerfile
@@ -14,6 +15,7 @@ services:
       - backendapp
 
   backendapp:
+    image: bobapp-backend
     build:
       context: ./back
       dockerfile: Dockerfile
