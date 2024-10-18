@@ -32,6 +32,13 @@ jobs:
         run: mvn clean install
         working-directory: back
 
+      - name: test reporting
+        uses: phoenix-actions/test-reporting@v8
+        with:
+          name: junit test reporting
+          path: back/target/surefire-reports/*.xml
+          reporter: java-junit
+          
       # Récupération du rapport de couverture XML
       - name: Récupération du rapport de couverture XML
         uses: actions/upload-artifact@v4
