@@ -8,28 +8,32 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
+
+      # Récupération du code   
       - name: Récupération du code
         uses: actions/checkout@v4
+
+      # Java setup  
       - name: Java setup
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Installation des dépendences et test
+
+      # Installation des dépendences et test backend    
+      - name: Installation des dépendences et test backend
         run: mvn clean install
         working-directory: back
+
+      # Récupération du rapport de couverture XML
       - name: Récupération du rapport de couverture XML
         uses: actions/upload-artifact@v4
         with:
           name: jacoco
           path: back/target/site/jacoco/jacoco.xml
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Vérifie si le projet sonar cloud exist, sinon on le créé
+
+      # Vérifie si le projet SonarCloud existe, sinon on le crée 
+      - name: Vérifie si le projet SonarCloud existe, sinon on le crée
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
@@ -44,7 +48,16 @@ jobs:
           else
             echo "Le projet existe déja."
           fi
-          
+
+      # Mise en cache de SonarCloud
+      - name: Mise en cache de SonarCloud
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      # Analyse de sonar cloud backend
       - name: Analyse de sonar cloud backend
         working-directory: back
         env:
@@ -53,33 +66,46 @@ jobs:
          mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io
 
   frontend:
-    name: test du frontend
+    name: Test du frontend
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
+      # Récupération du code 
       - name: Récupération du code
         uses: actions/checkout@v4
+        
+      # Node.js setup
       - name: Node.js setup
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      # Java setup
       - name: Java setup
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      # Installation des dépendances  
       - name: Installation des dépendances
         run: npm install
         working-directory: front
-      - name: test angular
+
+      # Test front
+      - name: Test front
         run: npm run test
         working-directory: front
+        
+      # Récupération du dossier avec les rapports de couvertures
       - name: Récupération du dossier avec les rapports de couvertures
         uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: front/coverage
-      - name: Vérifie si le projet sonar cloud exist, sinon on le créé
+
+      # Vérifie si le projet SonarCloud existe, sinon on le crée
+      - name: Vérifie si le projet SonarCloud existe, sinon on le crée
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
@@ -94,6 +120,16 @@ jobs:
           else
             echo "Le projet existe déja."
           fi
+
+      # Mise en cache de SonarCloud
+      - name: Mise en cache de SonarCloud
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      
+      # Analyse de sonar cloud frontend
       - name: Analyse de sonar cloud frontend
         working-directory: front
         env:
