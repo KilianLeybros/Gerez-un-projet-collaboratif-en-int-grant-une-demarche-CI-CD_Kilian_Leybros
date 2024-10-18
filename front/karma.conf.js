@@ -25,10 +25,10 @@ module.exports = function (config) {
       suppressAll: true, // removes the duplicated traces
     },
     coverageReporter: {
-      dir: "coverage/bobapp",
-      dir: 'coverage/',
-      subdir: '.',
-      file: 'lcov.info'
+      dir: "coverage/",
+      subdir: ".",
+      type: "lcov",
+      file: "lcov.info",
     },
     reporters: ["progress", "kjhtml"],
     port: 9876,
