@@ -137,8 +137,8 @@ jobs:
     # Tag des images Docker
     - name: Tag des images Docker
       run: |
-        docker tag bobapp-frontend:latest ${{ secrets.DOCKER_HUB_USERNAME }}/bobapp-nginx:latest
-        docker tag bobapp-backend:latest ${{ secrets.DOCKER_HUB_USERNAME }}/backendapp-java:latest
+        docker tag bobapp-frontend:latest ${{ secrets.DOCKER_HUB_USERNAME }}/bobapp-frontend:latest
+        docker tag bobapp-backend:latest ${{ secrets.DOCKER_HUB_USERNAME }}/bobapp-backend:latest
 
     # Pousser les images sur Docker Hub
     - name: Push Docker images to Docker Hub
