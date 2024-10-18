@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   backend:
-    name: Test du backend et sonar cloud
+    name: Test du backend et annalyse sonar cloud
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
@@ -66,7 +66,7 @@ jobs:
          mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io
 
   frontend:
-    name: Test du frontend
+    name: Test du frontend et annalyse sonar cloud
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
@@ -146,6 +146,7 @@ jobs:
             -Dsonar.sourceEncoding=UTF-8 \
 
   docker-build:
+    name: Build des images docker et publication sur Docker Hub
     runs-on: ubuntu-latest
 
     steps:
