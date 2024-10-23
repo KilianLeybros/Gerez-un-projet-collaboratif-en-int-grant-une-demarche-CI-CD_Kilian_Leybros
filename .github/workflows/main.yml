@@ -32,10 +32,10 @@ jobs:
         run: mvn clean install
         working-directory: back
 
-      - name: test reporting
+      - name: Back Junit test reporting
         uses: phoenix-actions/test-reporting@v8
         with:
-          name: junit test reporting
+          name: Back Junit test reporting
           path: back/target/surefire-reports/*.xml
           reporter: java-junit
           
@@ -111,6 +111,13 @@ jobs:
       - name: Test front
         run: npm run test
         working-directory: front
+
+      - name: Front Junit test reporting
+        uses: phoenix-actions/test-reporting@v8
+        with:
+          name: Back Junit test reporting
+          path: front/coverage/junit/*/*.xml
+          reporter: java-junit
         
       # Récupération du dossier avec les rapports de couvertures
       - name: Récupération du dossier avec les rapports de couvertures
