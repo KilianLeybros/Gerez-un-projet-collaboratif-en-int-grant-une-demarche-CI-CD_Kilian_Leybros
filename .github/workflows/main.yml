@@ -13,7 +13,6 @@ jobs:
     name: Test du backend et annalyse sonar cloud
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
-    
     steps:
 
       # Récupération du code   
@@ -83,8 +82,7 @@ jobs:
   frontend:
     name: Test du frontend et annalyse sonar cloud
     runs-on: ubuntu-latest
-    # if: github.event_name == 'pull_request'
-    if: github.event_name == 'push'
+    if: github.event_name == 'pull_request'
     steps:
       # Récupération du code 
       - name: Récupération du code
