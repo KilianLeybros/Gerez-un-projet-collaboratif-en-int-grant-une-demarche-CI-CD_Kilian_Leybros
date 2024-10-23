@@ -12,8 +12,8 @@ jobs:
   backend:
     name: Test du backend et annalyse sonar cloud
     runs-on: ubuntu-latest
-   # if: github.event_name == 'pull_request'
-    if: github.event_name == 'push'
+    if: github.event_name == 'pull_request'
+    
     steps:
 
       # Récupération du code   
@@ -32,6 +32,7 @@ jobs:
         run: mvn clean install
         working-directory: back
 
+      # Génération d'un rapport back disponible au resultat du pipeline 
       - name: Back Junit test reporting
         uses: phoenix-actions/test-reporting@v8
         with:
@@ -112,10 +113,11 @@ jobs:
         run: npm run test
         working-directory: front
 
+      # Génération d'un rapport front disponible au resultat du pipeline 
       - name: Front Junit test reporting
         uses: phoenix-actions/test-reporting@v8
         with:
-          name: Back Junit test reporting
+          name: Front Junit test reporting
           path: front/coverage/junit/*/*.xml
           reporter: java-junit
         
