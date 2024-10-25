@@ -79,6 +79,14 @@ jobs:
         run: |
          mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io
 
+      # Vérification du résultat de l'analyse SonarCloud, on refuse le pipeline si ce n'est pas valide
+      - name: Vérification du résultat de SonarCloud
+        run: |
+          # Vérifiez le statut de l'analyse ici
+          if [[ $(curl -s -X GET "https://sonarcloud.io/api/project_branches/list?project=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}" -H "Authorization: Basic $(echo -n $SONAR_TOKEN: | base64)") != *"success"* ]]; then
+            exit 1
+          fi
+
   frontend:
     name: Test du frontend et annalyse sonar cloud
     runs-on: ubuntu-latest
