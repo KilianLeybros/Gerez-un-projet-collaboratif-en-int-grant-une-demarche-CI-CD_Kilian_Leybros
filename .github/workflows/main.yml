@@ -5,13 +5,14 @@ on:
     branches:
       - master            
   push:                  
-    branches:
-      - master
+     branches: 
+      - '*'
 
 jobs:
   backend:
     name: Test du backend et annalyse sonar cloud
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
 
       # Récupération du code   
@@ -81,7 +82,7 @@ jobs:
   frontend:
     name: Test du frontend et annalyse sonar cloud
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'pull_request'
     steps:
       # Récupération du code 
       - name: Récupération du code
