@@ -38,7 +38,6 @@ jobs:
           name: Back Junit test reporting
           path: back/target/surefire-reports/*.xml
           reporter: java-junit
-          output-to: 'step-summary'
           
       # Récupération du rapport de couverture XML
       - name: Récupération du rapport de couverture XML
@@ -119,7 +118,6 @@ jobs:
           name: Front Junit test reporting
           path: front/coverage/junit/*/*.xml
           reporter: java-junit
-          output-to: 'step-summary'
         
       # Récupération du dossier avec les rapports de couvertures
       - name: Récupération du dossier avec les rapports de couvertures
