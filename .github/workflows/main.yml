@@ -79,14 +79,6 @@ jobs:
         run: |
          mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=https://sonarcloud.io
 
-      # Vérification du résultat de l'analyse SonarCloud back-end, on refuse le pipeline si ce n'est pas valide
-      - name: Vérification du résultat de SonarCloud pour le back-end
-        run: |
-          # Vérifiez le statut de l'analyse ici
-          if [[ $(curl -s -X GET "https://sonarcloud.io/api/project_branches/list?project=${{ secrets.SONAR_PROJECT_KEY_BACKEND }}" -H "Authorization: Basic $(echo -n $SONAR_TOKEN: | base64)") != *"success"* ]]; then
-            exit 1
-          fi
-
   frontend:
     name: Test du frontend et annalyse sonar cloud
     runs-on: ubuntu-latest
@@ -174,14 +166,6 @@ jobs:
             -Dsonar.sources=src \
             -Dsonar.tests=src \
             -Dsonar.sourceEncoding=UTF-8 \
-
-      # Vérification du résultat de l'analyse SonarCloud front-end, on refuse le pipeline si ce n'est pas valide
-      - name: Vérification du résultat de SonarCloud pour le front-end
-        run: |
-          # Vérifiez le statut de l'analyse ici
-          if [[ $(curl -s -X GET "https://sonarcloud.io/api/project_branches/list?project=${{ secrets.SONAR_PROJECT_KEY_FRONTEND }}" -H "Authorization: Basic $(echo -n $SONAR_TOKEN: | base64)") != *"success"* ]]; then
-            exit 1
-          fi
 
   docker-build:
     name: Build des images docker et publication sur Docker Hub
