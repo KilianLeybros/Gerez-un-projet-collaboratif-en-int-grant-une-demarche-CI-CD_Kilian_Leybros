@@ -154,7 +154,5 @@ La présence de 2 Security Hotspots non résolus et d'une note E est critique da
 - **Prioriser la correction des Security Hotspots** : Les problèmes de sécurité doivent être corrigés en priorité, en raison de leur impact sur la fiabilité et la confiance des utilisateurs. De plus, l'un des deux Security Hotspots provient de la même source que le bug. Nous pouvons éventuellement corriger les deux problèmes en même temps.
 - **Corriger le bug back-end** : Le bug back-end doivent être analysé et corrigé pour améliorer l'expérience utilisateur et la fiabilité de l'application.
 - **Améliorer la couverture de test du backend** : La couverture du backend doit être augmentée au-delà de 80 % afin d'améliorer la robustesse et de minimiser les bugs.
-- **Corriger les bugs front-end** : Les problèmes remontés par les utilisateurs, notamment ceux liés à l'interface, doivent être analysés et corrigés pour améliorer l'expérience utilisateur et la fiabilité de l'application.
-- **Optimiser les notifications** : Répondre aux commentaires des utilisateurs concernant les retards dans les notifications, en analysant les temps de réponse dans l'API et les systèmes de gestion des expéditions.
 - **Réfactoriser le code et mettre à jour les librairies** : Le code pourrait être refactorisé afin d'éviter le code semelle et d'avoir un code plus maintenable. Les bibliothèques du projet pourraient également être mises à jour afin de réduire la dette technique et de potentiels bugs provenant de bibliothèques obsolètes.
 
