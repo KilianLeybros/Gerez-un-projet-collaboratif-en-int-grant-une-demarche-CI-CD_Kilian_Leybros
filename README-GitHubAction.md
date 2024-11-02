@@ -1,6 +1,6 @@
 # Documentation du Pipeline CI/CD BobApp
 
-## 1 Explication des étapes du pipeline GitHub Actions
+## 1. Explication des étapes du pipeline GitHub Actions
 
 ### 1.1 Déclencheurs du Pipeline
 
