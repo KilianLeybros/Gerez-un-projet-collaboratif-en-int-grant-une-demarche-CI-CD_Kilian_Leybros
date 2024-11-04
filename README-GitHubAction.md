@@ -114,7 +114,7 @@ Ce job construit les images Docker et les publie sur Docker Hub uniquement lors 
 - **Code Coverage**
   - **Overall**
       - Coverage cible pour le frontend : 80 % (actuel : 83,3 %).
-      - Coverage cible pour le backend : 35% (actuel : 38,8 %).
+      - Coverage cible pour le backend : 80% (actuel : 38,8 %).
   - **Nouveau code**
       - Coverage cible pour le frontend : 80 %.
       - Coverage cible pour le backend : 80 %.
